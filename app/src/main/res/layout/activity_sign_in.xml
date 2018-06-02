@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity"
+    android:id="@+id/signIn"
+    android:background="@drawable/signinbg2">
+
+    <!--ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rings"
+        android:src="@drawable/rings3"
+        android:contentDescription="@string/rings"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" /-->
+
+    <!-- begin username and password fields -->
+
+    <TextView
+        android:id="@+id/passwordPromptTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="218dp"
+        android:labelFor="@id/passwordPromptEditText"
+        android:text="@string/passwordPromptTextView"
+        android:textColor="@color/white"
+        android:textSize="@dimen/standardTextSize" />
+
+    <EditText
+        android:id="@+id/passwordPromptEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordPromptTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-218dp"
+        android:ems="12"
+        android:gravity="center"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/usernamePromptTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="124dp"
+        android:labelFor="@id/usernamePromptEditText"
+        android:text="@string/usernamePromptTextView"
+        android:textColor="@color/white"
+        android:textSize="@dimen/standardTextSize" />
+
+    <EditText
+        android:id="@+id/usernamePromptEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usernamePromptTextView"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:singleLine="true" />
+
+    <!-- End username and password fields -->
+
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="87dp"
+        android:onClick="bluetoothSetup"
+        android:text="@string/signIn"
+        android:textColor="@color/paintbot_green" />
+
+    <TextView
+        android:id="@+id/userInfoPromptTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:gravity="center"
+        android:text="@string/signInPromptTextView"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
