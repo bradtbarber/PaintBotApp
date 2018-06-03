@@ -102,6 +102,7 @@ BluetoothSetupActivity extends Activity implements AdapterView.OnItemClickListen
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     btDevices.add(device);
                     String s = "";
+
                     for(int a = 0; a < pairedDevices.size(); a++){
                         if(device.getName().equals(pairedDevices.get(a))){
                             s = "(Paired)";
