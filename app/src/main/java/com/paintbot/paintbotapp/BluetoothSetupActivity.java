@@ -19,7 +19,8 @@ import java.util.Objects;
 import java.util.Set;
 
 
-public class BluetoothSetupActivity extends Activity implements AdapterView.OnItemClickListener{
+public class
+BluetoothSetupActivity extends Activity implements AdapterView.OnItemClickListener{
     ArrayAdapter<String> deviceListAdapter;
     ListView deviceListView;
     BluetoothAdapter btAdapter;
@@ -76,6 +77,7 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
     }
 
     private void init() {
+
         deviceListView = findViewById(R.id.deviceListView);
         deviceListView.setOnItemClickListener(this);
         deviceListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, 0);
@@ -88,6 +90,7 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
             finish();
         }
         pairedDevices = new ArrayList<>();
+        pairedDevicesHWAddresses = new ArrayList<>();
         filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         btDevices = new ArrayList<>();
         btReceiver = new BroadcastReceiver() {
