@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class  SplashPageActivity extends AppCompatActivity {
+public class SplashPageActivity extends AppCompatActivity {
 
     ViewGroup rootContainer;
     Scene preSplashScene;
@@ -46,7 +46,7 @@ public class  SplashPageActivity extends AppCompatActivity {
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setVolume(100,100);
         mMediaPlayer.setLooping(true);
-        mMediaPlayer.start();
+        //mMediaPlayer.start();
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,26 +39,8 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
         setContentView(R.layout.activity_bluetooth_setup);
 
         init();
-        if(btAdapter == null){
-            Toast.makeText(getApplicationContext(),
-                    "No Bluetooth adaptor detected. Bluetooth is required to run this app.",
-                    Toast.LENGTH_LONG).show();
-            finish();
-        }
-        else{
-            if(!btAdapter.isEnabled()){
-//                if (!btAdapter.enable()) {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Failed to start Bluetooth adaptor.",
-//                            Toast.LENGTH_LONG).show();
-//                    finish();
-//                }
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
-            getPairedDevices();
-            startDiscovery();
-        }
+        getPairedDevices();
+//        startDiscovery();
     }
 
     private void startDiscovery() {
@@ -69,6 +52,7 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
         pairedDevicesSet = btAdapter.getBondedDevices();
         if(pairedDevicesSet.size()>0){
             for(BluetoothDevice device : pairedDevicesSet){
+                deviceListAdapter.add(device.getName() + " (Paired) " + "\n" + device.getAddress());
                 pairedDevices.add(device.getName());
                 pairedDevicesHWAddresses.add(device.getAddress());
             }
@@ -77,9 +61,9 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
 
     private void init() {
         deviceListView = findViewById(R.id.deviceListView);
-        deviceListView.setOnItemClickListener(this);
         deviceListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, 0);
         deviceListView.setAdapter(deviceListAdapter);
+        deviceListView.setOnItemClickListener(this);
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter == null) {
             Toast.makeText(getApplicationContext(),
@@ -87,28 +71,39 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
                     Toast.LENGTH_LONG).show();
             finish();
         }
+        else {
+            if (btAdapter.isEnabled()) {
+                Toast.makeText(getApplicationContext(),
+                        "Bluetooth ON...", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+        }
         pairedDevices = new ArrayList<>();
+        pairedDevicesHWAddresses = new ArrayList<>();
         filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         btDevices = new ArrayList<>();
-        btReceiver = new BroadcastReceiver() {
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if(BluetoothDevice.ACTION_FOUND.equals(action)){
-                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    btDevices.add(device);
-                    String s = "";
-                    for(int a = 0; a < pairedDevices.size(); a++){
-                        if(device.getName().equals(pairedDevices.get(a))){
-                            s = "(Paired)";
-                            break;
-                        }
-                    }
-                    deviceListAdapter.add(device.getName()+" "+s+" "+"\n"+device.getAddress());
-                }
-            }
-        };
+//        btReceiver = new BroadcastReceiver() {
+//
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                String action = intent.getAction();
+//                if(BluetoothDevice.ACTION_FOUND.equals(action)){
+//                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+//                    btDevices.add(device);
+//                    String s = "";
+//                    for(int a = 0; a < pairedDevices.size(); a++){
+//                        if(device.getName().equals(pairedDevices.get(a))){
+//                            s = "(Paired)";
+//                            break;
+//                        }
+//                    }
+//                    deviceListAdapter.add(device.getName()+" "+s+" "+"\n"+device.getAddress());
+//                }
+//            }
+//        };
 
         registerReceiver(btReceiver, filter);
         filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
@@ -145,9 +140,11 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
         }
         try {
             if (Objects.requireNonNull(deviceListAdapter.getItem(arg2)).contains("(Paired)")) {
-                BluetoothDevice selectedDevice = btDevices.get(arg2);
+                //BluetoothDevice selectedDevice = btDevices.get(arg2);
+                String info = ((TextView) arg1).getText().toString();
+                String address = info.substring(info.length() - 17);
                 Intent main = new Intent(this, MainMenuActivity.class);
-                main.putExtra("btdevice", selectedDevice);
+                main.putExtra("btdevice", address);
                 startActivity(main);
             } else {
                 Toast.makeText(getApplicationContext(), "Device is not paired.", Toast.LENGTH_SHORT).show();
