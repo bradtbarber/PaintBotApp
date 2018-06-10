@@ -17,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".SplashPageActivity"
             android:label="@string/app_name">
@@ -26,32 +25,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SignInActivity"
             android:label="@string/title_sign_in_activity"
-            android:parentActivityName=".SplashPageActivity" >
+            android:parentActivityName=".SplashPageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SignInActivity"/>
+                android:value=".SignInActivity" />
         </activity>
-
         <activity
             android:name=".BluetoothSetupActivity"
             android:label="@string/title_bluetooth_setup_activity"
-            android:parentActivityName=".SignInActivity" >
+            android:parentActivityName=".SignInActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BluetoothSetupActivity"/>
+                android:value=".BluetoothSetupActivity" />
         </activity>
-
         <activity
             android:name=".MainMenuActivity"
             android:label="@string/title_main_menu_activity"
-            android:parentActivityName=".BluetoothSetupActivity" >
+            android:parentActivityName=".BluetoothSetupActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainMenuActivity"/>
+                android:value=".MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".SensorReadoutActivity"
+            android:label="@string/title_activity_sensor_readout"
+            android:parentActivityName=".BluetoothSetupActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BluetoothSetupActivity" />
         </activity>
     </application>
 

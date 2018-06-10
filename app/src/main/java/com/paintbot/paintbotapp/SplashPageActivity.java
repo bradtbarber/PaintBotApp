@@ -21,6 +21,9 @@ public class SplashPageActivity extends AppCompatActivity {
     Scene splashScene;
     Transition transitionMgr;
 
+    AudioManager mAudioManager;
+    MediaPlayer mMediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +41,8 @@ public class SplashPageActivity extends AppCompatActivity {
 
         TransitionManager.go(splashScene, transitionMgr);
 
-        final AudioManager mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-        MediaPlayer mMediaPlayer;
+        mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        assert mAudioManager != null;
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                 mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.splashaudio);
@@ -69,6 +72,24 @@ public class SplashPageActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.stop();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+        }
     }
 
     public void signIn(View view) {
