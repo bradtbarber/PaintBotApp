@@ -5,7 +5,7 @@
     tools:context=".SplashPageActivity"
     android:id="@+id/rootContainer"
     android:onClick="signIn"
-    android:background="@drawable/paintbot2">
+    android:background="@drawable/paintbot_s_min">
 
     <TextView
         android:id="@+id/continueText"

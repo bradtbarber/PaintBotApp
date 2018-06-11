@@ -12,9 +12,33 @@
     <string name="title_sign_in_activity">Sign In</string>
     <string name="title_bluetooth_setup_activity">Bluetooth Device Setup</string>
     <string name="title_main_menu_activity">Main Menu</string>
-    <string name="title_activity_sensor_readout">SensorReadoutActivity</string>
+    <string name="title_activity_sensor">Sensor Readout</string>
 
     <string name="sensorDataTextView">Below is the incoming sensor data</string>
     <string name="stopButtonTextView">Stop</string>
     <string name="sensorTextView">Distance Sensor Data</string>
+
+    <string name="bt_setup_text_view">Select device to connect to:</string>
+    <string name="none_paired">No paired bluetooth devices.</string>
+
+    <string name="sensor_fl_reading">Front-Left Distance: --.-- mm</string>
+    <string name="sensor_fr_reading">Front-Right Distance: --.-- mm</string>
+    <string name="sensor_rf_reading">Right-Front Distance: --.-- mm</string>
+    <string name="sensor_rb_reading">Right-Back Distance: --.-- mm</string>
+    <string name="start_button">Start</string>
+    <string name="stop_button">STOP</string>
+    <string name="connecting">Conecting…</string>
+    <string name="empty_string"> </string>
+    <string name="bluetooth_on">…Bluetooth ON…</string>
+    <string name="bluetooth_unsupported">Device does not support Bluetooth.\n
+        Bluetooth is required to run this app."</string>
+
+    <string name="start_paintbot">Starting PaintBot…</string>
+    <string name="stop_paintbot">Stopping PaintBot…</string>
+
+    <string name="uuid">00001101-0000-1000-8000-00805F9B34FB</string>
+    <string name="connection_failure">Conection Failure</string>
+    <string name="socket_failure">Socket Connection Failure</string>
+    <string name="start_char">#</string>
+    <string name="end_char">~</string>
 </resources>

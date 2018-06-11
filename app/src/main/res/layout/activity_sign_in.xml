@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context=".SignInActivity"
     android:id="@+id/signIn"
-    android:background="@drawable/signinbg2">
+    android:background="@drawable/signinbg_s_min">
 
     <!--ImageView
         android:layout_width="wrap_content"
