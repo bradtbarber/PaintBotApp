@@ -23,6 +23,8 @@ import java.util.Set;
 
 
 public class BluetoothSetupActivity extends Activity implements AdapterView.OnItemClickListener{
+
+
     ArrayAdapter<String> deviceListAdapter;
     ListView deviceListView;
     BluetoothAdapter btAdapter;
@@ -31,6 +33,8 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
     ArrayList<BluetoothDevice> btDevices;
     IntentFilter filter;
     final String TAG = "BluetoothActivty";
+
+
     private final BroadcastReceiver btReceiver = new BroadcastReceiver() {
 
         @Override
@@ -71,6 +75,10 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        pairedDevices = new ArrayList<>();
+        btDevices = new ArrayList<>();
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        
         setContentView(R.layout.activity_bluetooth_setup);
         btDevices.addAll(btAdapter.getBondedDevices());
         initBluetooth();
@@ -88,27 +96,14 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
         btAdapter.startDiscovery();
     }
 
-    private void getPairedDevices(){
-        pairedDevicesSet = btAdapter.getBondedDevices();
-        if(pairedDevicesSet.size()>0){
-            for(BluetoothDevice device : pairedDevicesSet){
-                //pairedDevices.add(device.getName());
-                btDevices.add(device);
-                deviceListAdapter.add(device.getName() + "\n" + device.getAddress());
-            }
-        }
-    }
 
     private void initBluetooth() {
 
         deviceListView = findViewById(R.id.deviceListView);
         deviceListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, 0);
-        pairedDevices = new ArrayList<>();
-        btDevices = new ArrayList<>();
         deviceListView.setAdapter(deviceListAdapter);
         deviceListView.setOnItemClickListener(this);
         //Try to get the device's bluetooth adaptor (radio) and enable it
-        btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter == null) {
             //Device does not support bluetooth
             Toast.makeText(getApplicationContext(),
@@ -152,13 +147,7 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
             selectedDevice.createBond();
         }
     }
-    /*
-        @Override
-        protected void onPause() {
-            super.onPause();
-            btAdapter.cancelDiscovery();
-        }
-    */
+
     @Override
     protected void onResume() {
         super.onResume();
