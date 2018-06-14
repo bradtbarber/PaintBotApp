@@ -28,7 +28,6 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
     ArrayAdapter<String> deviceListAdapter;
     ListView deviceListView;
     BluetoothAdapter btAdapter;
-    Set<BluetoothDevice> pairedDevicesSet;
     ArrayList<String> pairedDevices;
     ArrayList<BluetoothDevice> btDevices;
     IntentFilter filter;
@@ -48,6 +47,7 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
                     deviceListAdapter.notifyDataSetChanged();
                 }
             }
+
 
             if (action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)){
                 BluetoothDevice mDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -78,10 +78,10 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
         pairedDevices = new ArrayList<>();
         btDevices = new ArrayList<>();
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-        
         setContentView(R.layout.activity_bluetooth_setup);
         btDevices.addAll(btAdapter.getBondedDevices());
         initBluetooth();
+        addBondedDevicesToAdapter();
         startDiscovery();
         filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(btReceiver, filter);
@@ -99,8 +99,8 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
 
     private void initBluetooth() {
 
-        deviceListView = findViewById(R.id.deviceListView);
-        deviceListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, 0);
+        deviceListView = findViewById(R.id.paired_devices);
+        deviceListAdapter = new ArrayAdapter<>(this,  R.layout.device_name, 0);
         deviceListView.setAdapter(deviceListAdapter);
         deviceListView.setOnItemClickListener(this);
         //Try to get the device's bluetooth adaptor (radio) and enable it
@@ -162,6 +162,14 @@ public class BluetoothSetupActivity extends Activity implements AdapterView.OnIt
         unregisterReceiver(btReceiver);
     }
 
+    private void addBondedDevicesToAdapter(){
+        for (BluetoothDevice device : btAdapter.getBondedDevices()){
+
+            deviceListAdapter.add(device.getName() + "\n" + device.getAddress());
+
+        }
+
+    }
     private void checkLocationPermissions(){
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
